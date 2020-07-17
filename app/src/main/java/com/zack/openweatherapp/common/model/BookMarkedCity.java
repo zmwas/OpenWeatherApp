@@ -1,14 +1,15 @@
-package com.zack.openweatherapp;
+package com.zack.openweatherapp.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
 
 @Entity(tableName = "bookmark")
-public class BookMark implements Serializable {
+public class BookMarkedCity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

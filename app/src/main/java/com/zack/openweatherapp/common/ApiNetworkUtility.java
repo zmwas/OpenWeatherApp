@@ -3,7 +3,10 @@ package com.zack.openweatherapp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -15,10 +18,10 @@ public class ApiNetworkUtility {
      */
     public String fetchApiResult(URL url, String method) throws IOException {
         InputStream stream = null;
-        HttpsURLConnection connection = null;
+        HttpURLConnection connection = null;
         String result = null;
         try {
-            connection = (HttpsURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             // Timeout for reading InputStream arbitrarily set to 3000ms.
             connection.setReadTimeout(3000);
             // Timeout for connection.connect() arbitrarily set to 3000ms.
@@ -40,7 +43,7 @@ public class ApiNetworkUtility {
 //            publishProgress(DownloadCallback.Progress.GET_INPUT_STREAM_SUCCESS, 0);
             if (stream != null) {
                 // Converts Stream to String with max length of 500.
-                result = readStream(stream, 500);
+                result = readStream(stream, 1024);
             }
         } finally {
             // Close Stream and disconnect HTTPS connection.
@@ -54,28 +57,14 @@ public class ApiNetworkUtility {
         return result;
     }
 
-    private String readStream(InputStream stream, int maxLength) throws IOException {
-        String result = null;
-        // Read InputStream using the UTF-8 charset.
-        InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-        // Create temporary buffer to hold Stream data with specified max length.
-        char[] buffer = new char[maxLength];
-        // Populate temporary buffer with Stream data.
-        int numChars = 0;
-        int readSize = 0;
-        while (numChars < maxLength && readSize != -1) {
-            numChars += readSize;
-            int pct = (100 * numChars) / maxLength;
-//            publishProgress(DownloadCallback.Progress.PROCESS_INPUT_STREAM_IN_PROGRESS, pct);
-            readSize = reader.read(buffer, numChars, buffer.length - numChars);
+    private String readStream(InputStream stream, int bufferSize) throws IOException {
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(stream);
+        int charsRead;
+        while((charsRead = in.read(buffer, 0, buffer.length)) > 0) {
+            out.append(buffer, 0, charsRead);
         }
-        if (numChars != -1) {
-            // The stream was not empty.
-            // Create String that is actual length of response body if actual length was less than
-            // max length.
-            numChars = Math.min(numChars, maxLength);
-            result = new String(buffer, 0, numChars);
-        }
-        return result;
+        return out.toString();
     }
 }

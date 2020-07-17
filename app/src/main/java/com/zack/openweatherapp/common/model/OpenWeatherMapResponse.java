@@ -1,4 +1,4 @@
-package com.zack.openweatherapp;
+package com.zack.openweatherapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,16 +12,13 @@ public class OpenWeatherMapResponse {
     private String cod;
     @SerializedName("message")
     @Expose
-    private double message;
+    private int message;
     @SerializedName("cnt")
     @Expose
     private int cnt;
     @SerializedName("list")
     @Expose
     private List<WeatherResponse>list = null;
-    @SerializedName("city")
-    @Expose
-    private City city;
 
     public String getCod() {
         return cod;
@@ -40,11 +37,11 @@ public class OpenWeatherMapResponse {
         return message;
     }
 
-    public void setMessage(double message) {
+    public void setMessage(int message) {
         this.message = message;
     }
 
-    public OpenWeatherMapResponse withMessage(double message) {
+    public OpenWeatherMapResponse withMessage(int message) {
         this.message = message;
         return this;
     }
@@ -72,19 +69,6 @@ public class OpenWeatherMapResponse {
 
     public OpenWeatherMapResponse withList(List<WeatherResponse> list) {
         this.list = list;
-        return this;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public OpenWeatherMapResponse withCity(City city) {
-        this.city = city;
         return this;
     }
 
