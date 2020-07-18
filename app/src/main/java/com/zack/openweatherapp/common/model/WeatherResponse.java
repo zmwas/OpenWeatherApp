@@ -1,12 +1,15 @@
-package com.zack.openweatherapp.model;
+package com.zack.openweatherapp.common.model;
 
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class WeatherResponse {
+public class WeatherResponse implements Parcelable {
 
     @SerializedName("dt")
     @Expose
@@ -35,6 +38,23 @@ public class WeatherResponse {
     @SerializedName("dt_txt")
     @Expose
     private String dtTxt;
+
+    protected WeatherResponse(Parcel in) {
+        dt = in.readInt();
+        dtTxt = in.readString();
+    }
+
+    public static final Creator<WeatherResponse> CREATOR = new Creator<WeatherResponse>() {
+        @Override
+        public WeatherResponse createFromParcel(Parcel in) {
+            return new WeatherResponse(in);
+        }
+
+        @Override
+        public WeatherResponse[] newArray(int size) {
+            return new WeatherResponse[size];
+        }
+    };
 
     public int getDt() {
         return dt;
@@ -153,5 +173,15 @@ public class WeatherResponse {
         return this;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(dt);
+        dest.writeString(dtTxt);
+    }
 }
 

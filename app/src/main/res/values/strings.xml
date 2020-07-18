@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">OpenWeatherApp</string>
+    <string name="no_bookmarked_cities_click_on_a_city_in_the_map">
+        No bookmarked cities click on a city in the map.Click on the button to add a city</string>
+    <string name="wind">Wind</string>
+    <string name="rain">Rain</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="help">help</string>
 </resources>

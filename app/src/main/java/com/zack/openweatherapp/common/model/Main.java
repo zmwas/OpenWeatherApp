@@ -1,4 +1,4 @@
-package com.zack.openweatherapp.model;
+package com.zack.openweatherapp.common.model;
 
 
 import com.google.gson.annotations.Expose;

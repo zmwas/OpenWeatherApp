@@ -1,4 +1,4 @@
-package com.zack.openweatherapp.model;
+package com.zack.openweatherapp.common.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,6 +19,9 @@ public class OpenWeatherMapResponse {
     @SerializedName("list")
     @Expose
     private List<WeatherResponse>list = null;
+    @SerializedName("weather")
+    @Expose
+    private List<WeatherResponse>weather = null;
 
     public String getCod() {
         return cod;

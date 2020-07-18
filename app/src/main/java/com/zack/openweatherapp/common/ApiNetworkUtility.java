@@ -1,4 +1,4 @@
-package com.zack.openweatherapp;
+package com.zack.openweatherapp.common;
 
 import java.io.IOException;
 import java.io.InputStream;
